@@ -1,29 +1,19 @@
 import { Request, Response, NextFunction } from "express";
-import { ZodSchema } from "zod";
+import { plainToInstance } from "class-transformer";
+import { validate } from "class-validator";
 
-/**
- * Reusable validation middleware that behaves exactly like NestJS ValidationPipe.
- */
-export function validateBody(schema: ZodSchema<any>) { // 👈 Added <any> here!
-    return (req: Request, res: Response, next: NextFunction): void => {
-        const parseResult = schema.safeParse(req.body);
+export function validateBody<T extends object>(DtoClass: new () => T) {
+    return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+        const instance = plainToInstance(DtoClass, req.body);
+        const errors = await validate(instance);
 
-        if (!parseResult.success) {
-            // 👈 Changed .errors to .issues. Now TS perfectly infers `err` type!
-            const errorMessages = parseResult.error.issues.map(
-                (err) => `${err.path.join(".")}: ${err.message}`
-            );
-
-            res.status(400).json({
-                statusCode: 400,
-                message: errorMessages,
-                error: "Bad Request",
-            });
+        if (errors.length) {
+            const messages = errors.flatMap(e => Object.values(e.constraints || {}));
+            res.status(400).json({ statusCode: 400, message: messages, error: "Bad Request" });
             return;
         }
 
-        // Replace req.body with the parsed/cleaned data
-        req.body = parseResult.data;
+        req.body = instance;
         next();
     };
 }
