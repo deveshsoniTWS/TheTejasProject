@@ -1,4 +1,10 @@
-// src/constants/permissions.constants.ts
+
+export enum Role {
+    SUPER_ADMIN = 'SuperAdmin',
+    ADMIN = 'Admin',
+    BUSINESS_USER = 'BusinessUser',
+}
+
 
 export const Permission = {
     USER_CREATE: 'user.create',

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Role } from "../../../constants/roles.constants.js";
+import { Role } from "../../../constants/constants.js";
 
 /**
  * Higher-order middleware to restrict routes by specific permission names.
