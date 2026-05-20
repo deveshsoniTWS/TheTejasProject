@@ -21,7 +21,8 @@
     "start:frontend": "npm --prefix frontend run preview",
     "start:all": "npx concurrently \"npm run dev:db\" \"npm run start:backend\" \"npm run start:frontend\"",
     "db:push": "npx prisma db push --schema=backend/prisma/schema.prisma",
-    "db:migrate": "npx prisma migrate dev --schema=backend/prisma/schema.prisma"
+    "db:migrate": "npx prisma migrate dev --schema=backend/prisma/schema.prisma",
+    "db:createAdmin": "npm --prefix backend run createAdmin"
   },
   "repository": {
     "type": "git",
