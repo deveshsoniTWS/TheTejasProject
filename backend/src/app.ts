@@ -12,7 +12,10 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use("/auth", authRouter);
+const apiRouter = express.Router();
+apiRouter.use("/auth", authRouter);
+
+app.use("/api/v1", apiRouter);
 
 app.get("/", (req, res) => {
   res.send("API running");
