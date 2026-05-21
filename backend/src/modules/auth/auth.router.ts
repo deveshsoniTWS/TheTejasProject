@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { AuthController } from "./auth.controller.js";
-import { authenticateJWT } from "../../middleware/jwt.middleware.js";
-import { validateLoginBody } from "./middleware/login.validation.js";
+import { AuthController } from "./auth.controller";
+import { authenticateJWT } from "../../middleware/jwt.middleware";
+import { validateLoginBody } from "./middleware/login.validation";
 
 const authRouter = Router();
 const authController = new AuthController();

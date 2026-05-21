@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { config } from "../config/config.js";
-import { AuthUser, AccessTokenPayload } from "../modules/auth/auth.types.js";
+import { config } from "../config/config";
+import { AuthUser, AccessTokenPayload } from "../modules/auth/auth.types";
 
 // Merges the Express Request interface with our custom 'user' property globally
 declare global {

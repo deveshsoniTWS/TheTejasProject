@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
-import { config } from "../../config/config.js";
-import { AuthRepository } from "./auth.repository.js";
-import { comparePassword } from "../../lib/encryptDecrypt.js";
-import { AuthResponse, LogoutResponse, AccessTokenPayload, RefreshTokenPayload, LoginCredentials } from "./auth.types.js";
+import { config } from "../../config/config";
+import { AuthRepository } from "./auth.repository";
+import { comparePassword } from "../../lib/encryptDecrypt";
+import { AuthResponse, LogoutResponse, AccessTokenPayload, RefreshTokenPayload, LoginCredentials } from "./auth.types";
 import { StringValue } from "ms";
 
 export class AuthService {

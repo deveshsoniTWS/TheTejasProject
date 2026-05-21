@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
-import { config } from "./config/config.js";
+import { config } from "./config/config";
 import morgan from "morgan";
-import authRouter from "./modules/auth/auth.router.js";
+import authRouter from "./modules/auth/auth.router";
 
 export const app = express();
 
