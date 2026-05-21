@@ -3,6 +3,8 @@ import cors from "cors";
 import { config } from "./config/config";
 import morgan from "morgan";
 import authRouter from "./modules/auth/auth.router";
+import plantRouter from "./modules/plant/plant.router";
+import locationRouter from "./modules/location/location.router";
 
 export const app = express();
 
@@ -14,6 +16,8 @@ app.use(morgan("dev"));
 
 const apiRouter = express.Router();
 apiRouter.use("/auth", authRouter);
+apiRouter.use("/plants", plantRouter);
+apiRouter.use("/locations", locationRouter);
 
 app.use("/api/v1", apiRouter);
 
