@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "tsup src/server.ts --format esm --clean",
     "start": "node dist/server.js",
     "createAdmin": "tsx src/scripts/initialScript.ts",
     "lint": "eslint \"src/**/*.ts\"",
@@ -41,6 +41,7 @@
     "@types/ms": "^2.1.0",
     "@types/node": "^25.9.0",
     "@types/pg": "^8.11.4",
+    "tsup": "^8.5.1",
     "tsx": "^4.22.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.4"
