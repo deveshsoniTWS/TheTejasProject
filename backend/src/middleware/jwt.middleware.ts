@@ -4,11 +4,9 @@ import { config } from "../config/config";
 import { AuthUser, AccessTokenPayload } from "../modules/auth/auth.types";
 
 // Merges the Express Request interface with our custom 'user' property globally
-declare global {
-    namespace Express {
-        interface Request {
-            user?: AuthUser;
-        }
+declare module "express-serve-static-core" {
+    interface Request {
+        user?: AuthUser;
     }
 }
 
@@ -37,7 +35,7 @@ export function authenticateJWT(req: Request, res: Response, next: NextFunction)
         };
 
         next(); // Valid token! Pass control to the next handler/controller.
-    } catch (error) {
+    } catch {
         res.status(401).json({
             statusCode: 401,
             message: "Unauthorized - Invalid or expired token",
