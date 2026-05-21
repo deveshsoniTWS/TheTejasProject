@@ -9,7 +9,7 @@ export class AuthController {
     }
 
     // 1. login method
-    async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+    login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const { userName, password } = req.body;
             const result = await this.authService.login({ userName, password });
@@ -20,7 +20,7 @@ export class AuthController {
     }
 
     // 2. logout method
-    async logout(req: Request, res: Response, next: NextFunction): Promise<void> {
+    logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const result = this.authService.logout();
             res.status(200).json(result);
@@ -30,7 +30,7 @@ export class AuthController {
     }
 
     // 3. refresh method
-    async refresh(req: Request, res: Response, next: NextFunction): Promise<void> {
+    refresh = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const { refreshToken } = req.body;
             const result = await this.authService.refresh(refreshToken);

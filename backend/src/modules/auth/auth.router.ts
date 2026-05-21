@@ -1,16 +1,20 @@
 import { Router } from "express";
 import { AuthController } from "./auth.controller.js";
-import { authenticateJWT } from "./middleware/jwt.middleware.js";
-import { validateBody } from "./middleware/validation.middleware.js";
-import { LoginDto } from "./dto/login.dto.js";
+import { authenticateJWT } from "../../middleware/jwt.middleware.js";
+import { validateLoginBody } from "./middleware/login.validation.js";
 
 const authRouter = Router();
 const authController = new AuthController();
 
-authRouter.post("/login", validateBody(LoginDto), (req, res, next) => authController.login(req, res, next));
+authRouter.post("/login", validateLoginBody, authController.login);
+authRouter.post("/refresh", authController.refresh);
 
-authRouter.post("/logout", authenticateJWT, (req, res, next) => authController.logout(req, res, next));
+const protectedRouter = Router();
 
-authRouter.post("/refresh", (req, res, next) => authController.refresh(req, res, next));
+protectedRouter.use(authenticateJWT);
+
+protectedRouter.post("/logout", authController.logout);
+
+authRouter.use(protectedRouter);
 
 export default authRouter;
