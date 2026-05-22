@@ -1,17 +1,19 @@
+import { StatusCodes } from "../constants/constants";
+
 export const successResponse = <T>(
     message: string,
-    body: T ,
-    status = 200
+    body?: T ,
+    status = StatusCodes.SUCCESS
 ) => ({
     success: true,
     status,
     message,
-    body,
+    body: body ?? null,
 });
 
 export const errorResponse = (
     message: string,
-    status = 500
+    status = StatusCodes.INTERNAL_SERVER_ERROR
 ) => ({
     success: false,
     status,

@@ -2,11 +2,11 @@ import jwt from "jsonwebtoken";
 import { config } from "../../config/config";
 import { AuthRepository } from "./auth.repository";
 import { comparePassword } from "../../lib/encryptDecrypt";
-import { AuthResponse, LogoutResponse, AccessTokenPayload, RefreshTokenPayload, LoginCredentials } from "./auth.types";
+import { AuthResponse, AccessTokenPayload, RefreshTokenPayload, LoginCredentials } from "./auth.types";
 import { StringValue } from "ms";
 import { errorResponse, successResponse } from "../../utils/ErrorSuccessResponse";
 import { ErrorResponseType, SuccessResponseType } from "../../utils/types";
-
+import { StatusMessages, StatusCodes } from "../../constants/constants";
 export class AuthService {
     private authRepository: AuthRepository;
 
@@ -18,13 +18,13 @@ export class AuthService {
     async login(dto: LoginCredentials): Promise<SuccessResponseType<AuthResponse> | ErrorResponseType> {
         const user = await this.authRepository.findActiveUserByUsername(dto.userName);
         if (!user) {
-            return errorResponse("Invalid credentials", 401);
+            return errorResponse(StatusMessages.INVALID_CREDENTIALS, StatusCodes.UNAUTHORIZED);
         }
 
         // Using our custom common encryption library!
         const passwordMatch = await comparePassword(dto.password, user.passwordHash);
         if (!passwordMatch) {
-            return errorResponse("Invalid credentials", 401);
+            return errorResponse(StatusMessages.INVALID_CREDENTIALS, StatusCodes.UNAUTHORIZED);
         }
 
         const userWithPermissions = await this.authRepository.findUserWithPermissions(user.id);
@@ -51,12 +51,12 @@ export class AuthService {
             expiresIn: config.JWT_REFRESH_EXPIRES_IN as StringValue,
         });
 
-        return successResponse("Login successful", { accessToken, refreshToken });
+        return successResponse(StatusMessages.LOGIN_SUCCESSFUL, { accessToken, refreshToken });
     }
 
     // 2. Logout Logic (stateless)
-    logout(): SuccessResponseType<LogoutResponse> {
-        return successResponse("Logged out successfully", { message: "Logged out successfully" });
+    logout(): SuccessResponseType{
+        return successResponse(StatusMessages.LOGOUT_SUCCESSFUL);
     }
 
     // 3. Refresh Token Logic
@@ -66,16 +66,16 @@ export class AuthService {
         try {
             payload = jwt.verify(refreshToken, config.JWT_SECRET) as RefreshTokenPayload;
         } catch {
-            return errorResponse("Invalid refresh token", 401);
+            return errorResponse(StatusMessages.INVALID_REFRESH_TOKEN, StatusCodes.UNAUTHORIZED);
         }
 
         if (payload.tokenType !== "refresh") {
-            return errorResponse("Invalid token type", 401);
+            return errorResponse(StatusMessages.INVALID_REFRESH_TOKEN, StatusCodes.UNAUTHORIZED);
         }
 
         const userWithPermissions = await this.authRepository.findUserWithPermissions(payload.sub);
         if (!userWithPermissions) {
-            return errorResponse("User not found", 404);
+            return errorResponse(StatusMessages.USER_NOT_FOUND, StatusCodes.NOT_FOUND);
         }
 
         const newAccessPayload: AccessTokenPayload = {
@@ -98,6 +98,6 @@ export class AuthService {
             expiresIn: config.JWT_REFRESH_EXPIRES_IN as StringValue,
         });
 
-        return successResponse("Tokens refreshed successfully", { accessToken: newAccessToken, refreshToken: newRefreshToken });
+        return successResponse(StatusMessages.TOKENS_REFRESHED_SUCCESSFULLY, { accessToken: newAccessToken, refreshToken: newRefreshToken });
     }
 }
