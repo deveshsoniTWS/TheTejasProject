@@ -11,7 +11,7 @@ export class LocationController {
   getLocations = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const result = await this.locationService.getLocations(req.query);
-      res.status(200).json(result);
+      res.status(result.status).json(result);
     } catch (error) {
       next(error);
     }
