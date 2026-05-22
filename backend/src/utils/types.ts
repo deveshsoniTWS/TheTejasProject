@@ -1,13 +1,15 @@
+import { StatusCodes } from "../constants/constants";
+
 export type SuccessResponseType<T = unknown> = {
     success: boolean;
-    status: number;
+    status: StatusCodes;
     message: string;
-    body: T;
+    body: T | null;
 };
 
 export type ErrorResponseType = {
     success: boolean;
-    status: number;
+    status: StatusCodes;
     message: string;
     body: null;
 };

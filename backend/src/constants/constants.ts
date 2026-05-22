@@ -23,3 +23,26 @@ export const Permission = {
 } as const;
 
 export type PermissionName = (typeof Permission)[keyof typeof Permission];
+
+export enum StatusCodes {
+    SUCCESS= 200,
+    CREATED= 201,
+    BAD_REQUEST= 400,
+    UNAUTHORIZED= 401,
+    FORBIDDEN= 403,
+    NOT_FOUND= 404,
+    INTERNAL_SERVER_ERROR= 500,
+} ;
+
+export const StatusMessages = {
+    SUCCESS: "Success",
+    CREATED: "Created",
+
+    INVALID_CREDENTIALS: "Invalid credentials",
+    INVALID_REFRESH_TOKEN: "Invalid refresh token",
+    USER_NOT_FOUND: "User not found",
+
+    LOGIN_SUCCESSFUL: "Login successful",
+    LOGOUT_SUCCESSFUL: "Logged out successfully",
+    TOKENS_REFRESHED_SUCCESSFULLY: "Tokens refreshed successfully",
+} 
