@@ -14,7 +14,7 @@ export class PlantService {
 
   async getPlants(query: Record<string, any>): Promise<SuccessResponseType<PaginatedResponse<PlantItem>>> {
     const pagination = parsePagination(query);
-    const { data, total } = await this.plantRepository.findMany(pagination, query.name);
+    const { data, total } = await this.plantRepository.findMany(pagination, query.name, query.locationId);
     return successResponse(StatusMessages.SUCCESS, paginate(data as PlantItem[], total, pagination));
   }
 }
