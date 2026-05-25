@@ -31,6 +31,7 @@ export enum StatusCodes {
     UNAUTHORIZED= 401,
     FORBIDDEN= 403,
     NOT_FOUND= 404,
+    CONFLICT=409,
     INTERNAL_SERVER_ERROR= 500,
 } ;
 
@@ -45,4 +46,10 @@ export const StatusMessages = {
     LOGIN_SUCCESSFUL: "Login successful",
     LOGOUT_SUCCESSFUL: "Logged out successfully",
     TOKENS_REFRESHED_SUCCESSFULLY: "Tokens refreshed successfully",
+
+    PERMISSION_ALREADY_EXISTS: "Permission already exists",
+    PERMISSION_CREATED: "Permission created successfully",
+    PERMISSION_NOT_FOUND: "Permission not found",
+    PERMISSION_UPDATED: "Permission updated successfully",
+    PERMISSION_DELETED: "Permission deleted successfully",
 } 
