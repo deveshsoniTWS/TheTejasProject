@@ -31,6 +31,7 @@ export enum StatusCodes {
     UNAUTHORIZED= 401,
     FORBIDDEN= 403,
     NOT_FOUND= 404,
+    CONFLICT=409,
     INTERNAL_SERVER_ERROR= 500,
 } ;
 
@@ -45,4 +46,10 @@ export const StatusMessages = {
     LOGIN_SUCCESSFUL: "Login successful",
     LOGOUT_SUCCESSFUL: "Logged out successfully",
     TOKENS_REFRESHED_SUCCESSFULLY: "Tokens refreshed successfully",
+
+    ROLE_ALREADY_EXISTS: "Role already exists",
+    ROLE_CREATED: "Role created successfully",
+    ROLE_NOT_FOUND: "Role not found",
+    ROLE_UPDATED: "Role updated successfully",
+    ROLE_DELETED: "Role deleted successfully",
 } 
