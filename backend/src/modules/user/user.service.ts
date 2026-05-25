@@ -2,7 +2,7 @@ import { UserRepository } from "./user.repository";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { hashPassword } from "../../lib/encryptDecrypt";
-import { parsePagination, paginate, PaginatedResponse, PaginationQuery } from "../../lib/pagination";
+import { paginate, PaginatedResponse, PaginationQuery } from "../../lib/pagination";
 import { successResponse, errorResponse } from "../../utils/ErrorSuccessResponse";
 import { SuccessResponseType, ErrorResponseType } from "../../utils/types";
 import { StatusMessages, StatusCodes } from "../../constants/constants";
