@@ -16,14 +16,14 @@ export class UserService {
         this.userRepository = new UserRepository();
     }
 
-    async createUser(dto: CreateUserDto, requesterId:string): Promise<SuccessResponseType<UserItem> | ErrorResponseType> {
+    async createUser(dto: CreateUserDto, requesterId?:string): Promise<SuccessResponseType<UserItem> | ErrorResponseType> {
         const existing = await this.userRepository.findByUsername(dto.userName);
         if (existing) {
             return errorResponse(StatusMessages.USER_ALREADY_EXISTS, StatusCodes.CONFLICT);
         }
 
         const passwordHash = await hashPassword(dto.password);
-        const user = await this.userRepository.create({ ...dto, passwordHash, createdBy: requesterId });
+        const user = await this.userRepository.create({ ...dto, passwordHash, createdBy: requesterId ?? null });
 
         return successResponse(StatusMessages.USER_CREATED, user as UserItem);
     }

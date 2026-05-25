@@ -28,13 +28,13 @@ export class UserRepository {
         return { data, total };
     }
 
-    async create(dto: CreateUserDto & { passwordHash: string, createdBy: string }) {
+    async create(dto: CreateUserDto & { passwordHash: string, createdBy?: string | null }) {
         return prisma.user.create({
             data: {
                 userName: dto.userName,
                 name: dto.name,
                 passwordHash: dto.passwordHash,
-                createdBy: dto.createdBy
+                createdBy: dto.createdBy ?? null
             },
             select: { id: true, userName: true, name: true },
         });

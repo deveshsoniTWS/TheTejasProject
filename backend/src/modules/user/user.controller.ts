@@ -10,7 +10,7 @@ export class UserController{
     createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> =>{
         try{
             const {userName, password, name} = req.body;
-            const result=await this.userService.createUser({userName, password, name}, req.user!.id);
+            const result=await this.userService.createUser({userName, password, name}, req.user?.id);
             res.status(result.status).json(result);
         } catch (error){
             next(error);
@@ -37,7 +37,7 @@ export class UserController{
             next(error);
         }
     };
-    
+
     deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const id = req.params.id as string; 
